@@ -38,21 +38,51 @@ class Game:
                     return False
         return True
 
-    # TODO: Update coordinates of the figures for new screen size
     def draw_figures(self, board_row, board_column):
         o_color = (17, 25, 245)
         x_color = (245, 235, 42)
         board_screen = pygame.display.get_surface()
 
         if self.board[board_row][board_column] == 2:
-            pygame.draw.circle(board_screen, o_color, (int(board_column * 100 + 50),
-                                                       int(board_row * 100 + 50)), 30, 8)
-        elif self.board[board_row][board_column] == 1:
-            pygame.draw.line(board_screen, x_color, (board_column * 100 + 25, board_row * 100 + 100 - 25),
-                             (board_column * 100 + 100 - 25, board_row * 100 + 25), 10)
+            pygame.draw.circle(
+                board_screen,
+                o_color,
+                (
+                    int(board_column * (226) + (226 / 2)),
+                    int(board_row * 226 + (226 / 2))
+                ),
+                226 / 3.5,
+                15
+            )
 
-            pygame.draw.line(board_screen, x_color, (board_column * 100 + 25, board_row * 100 + 25),
-                             (board_column * 100 + 100 - 25, board_row * 100 + 100 - 25), 10)
+        elif self.board[board_row][board_column] == 1:
+            pygame.draw.line(
+                board_screen,
+                x_color,
+                (
+                    int(board_column * (226) + (226 / 4)),
+                    int(board_row * 226 + (226 / 4))
+                ),
+                (
+                    int(board_column * (226) + (226 / 4)) + 226 / 2,
+                    int(board_row * 226 + (226 / 4)) + 226 / 2
+                ),
+                20
+            )
+
+            pygame.draw.line(
+                board_screen,
+                x_color,
+                (
+                    int(board_column * (226) + (226 / 4)),
+                    int(board_row * 226 + (226 / 4)) + 226 / 2
+                ),
+                (
+                    int(board_column * (226) + (226 / 4)) + 226 / 2,
+                    int(board_row * 226 + (226 / 4))
+                ),
+                20
+            )
 
     def is_equal(self, a, b, c):
         return a == b and b == c and a != 0

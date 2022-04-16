@@ -18,8 +18,13 @@ class GUI:
         print(selection[0][0])
 
     def display_start_menu(self):
+        theme = pygame_menu.themes.THEME_DARK.copy()
+        theme.title_font = pygame_menu.font.FONT_BEBAS
+        theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_ADAPTIVE
+
         self.__menu = pygame_menu.Menu('Tic-Tac-Tai', self.width, self.height,
-                                       theme=pygame_menu.themes.THEME_DARK)
+                                       theme=theme)
+
         self.__menu.add.selector('Difficulty: ',
                                  [('Easy', 1), ('Medium', 2), ('Hard', 3)],
                                  onchange=self.set_difficulty)
