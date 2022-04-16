@@ -4,16 +4,26 @@ import pygame
 import pygame_menu
 
 # TODO: Minimax with alpha-beta prune
-# TODO: Play Again button to reset the game
 # TODO: Diffuculty difference, easy, medium, hard ?????
 # TODO: See the final board after the game is over
 
 
 class Game:
-
     def __init__(self):
         pygame.init()
+        self.player = 1
+        self.__difficulty = "Easy"
         self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+    def set_difficulty(self, difficulty):
+        self.__difficulty = difficulty
+
+    def get_difficulty(self):
+        return self.__difficulty
+
+    def reset_game(self):
+        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.player = 1
 
     def select_board_position(self, row, column, player):
         self.board[row][column] = player
