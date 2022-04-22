@@ -29,6 +29,9 @@ class Game:
         self.board[row][column] = player
         self.draw_figures(row, column)
 
+    def unselect_board_position(self, row, column):
+        self.board[row][column] = ""
+
     def select_random_board_position(self):
         while True:
             row = random.randint(0, 2)
@@ -40,6 +43,14 @@ class Game:
 
     def is_blank_position(self, row, column):
         return self.board[row][column] == 0
+
+    def get_blank_positions(self):
+        blank_positions = []
+        for row in range(3):
+            for column in range(3):
+                if self.is_blank_position(row, column):
+                    blank_positions.append((row, column))
+        return blank_positions
 
     def is_board_full(self):
         for row in range(3):
