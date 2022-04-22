@@ -1,16 +1,15 @@
-
+import sys
 import pygame
 from game import Game
 from gui import GUI
-from minmax import Minmax
 
 
 def main():
     """
     Main function
     """
+    sys.tracebacklimit = 0
     game = Game()
-    minmax = Minmax(game, game.board, 0, True)
     gui = GUI(game)
 
     gui.display_start_menu()
@@ -44,11 +43,9 @@ def main():
                                 continue
 
                         elif game.get_difficulty() == "Hard":
-                            # TODO: Implement Hard AI
-                            best_move = minmax.get_best_move()
-                            # print(best_move)
-                            # game.select_board_position(
-                            #     best_move[0], best_move[1], 2)
+                            best_move = game.get_best_move()
+                            game.select_board_position(
+                                best_move[0], best_move[1], 2)
 
                             winner = game.check_winner()
                             if winner is not None:

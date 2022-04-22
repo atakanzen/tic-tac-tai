@@ -1,22 +1,25 @@
+import math
 import random
-import time
 import pygame
-import pygame_menu
+
 
 # TODO: Minimax with alpha-beta prune
-# TODO: Diffuculty difference, easy, medium, hard ?????
 # TODO: See the final board after the game is over
 
-
 class Game:
+    board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
     def __init__(self):
         pygame.init()
         self.player = 1
         self.__difficulty = "Easy"
-        self.board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.scores = {1: -1000, 2: 1000, 0: 0}
 
     def set_difficulty(self, difficulty):
-        self.__difficulty = difficulty
+        if difficulty == "I love my life":
+            self.__difficulty = "Easy"
+        elif difficulty == "I hate my life":
+            self.__difficulty = "Hard"
 
     def get_difficulty(self):
         return self.__difficulty
@@ -64,7 +67,7 @@ class Game:
         x_color = (245, 235, 42)
         board_screen = pygame.display.get_surface()
 
-        if self.board[board_row][board_column] == 2:
+        if self.board[board_row][board_column] == 1:
             pygame.draw.circle(
                 board_screen,
                 o_color,
@@ -76,7 +79,7 @@ class Game:
                 15
             )
 
-        elif self.board[board_row][board_column] == 1:
+        elif self.board[board_row][board_column] == 2:
             pygame.draw.line(
                 board_screen,
                 x_color,
@@ -135,3 +138,43 @@ class Game:
             return 0
         else:
             return winner
+
+    def get_best_move(self):
+        best_score = -math.inf
+        best_move = None
+        for row in range(3):
+            for column in range(3):
+                if self.is_blank_position(row, column):
+                    self.board[row][column] = 2
+                    score = self.minimax(0, False)
+                    self.board[row][column] = 0
+                    if score > best_score:
+                        best_score = score
+                        best_move = (row, column)
+        return best_move
+
+    def minimax(self, depth, is_maximizing):
+        result = self.check_winner()
+        if result != None:
+            return self.scores[result]
+
+        if is_maximizing:
+            best_score = -math.inf
+            for row in range(3):
+                for column in range(3):
+                    if self.is_blank_position(row, column):
+                        self.board[row][column] = 2
+                        score = self.minimax(depth + 1, False)
+                        self.board[row][column] = 0
+                        best_score = max(score, best_score)
+            return best_score
+        else:
+            best_score = math.inf
+            for row in range(3):
+                for column in range(3):
+                    if self.is_blank_position(row, column):
+                        self.board[row][column] = 1
+                        score = self.minimax(depth + 1, True)
+                        self.board[row][column] = 0
+                        best_score = min(score, best_score)
+            return best_score

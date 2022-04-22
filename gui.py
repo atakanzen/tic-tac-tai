@@ -1,4 +1,4 @@
-
+import time
 import pygame
 import pygame_menu
 
@@ -32,7 +32,7 @@ class GUI:
                                        theme=theme)
 
         self.__menu.add.selector('Difficulty: ',
-                                 [('Easy', 1), ('Medium', 2), ('Hard', 3)],
+                                 [('I love my life', 1), ('I hate my life', 2)],
                                  onchange=self.set_difficulty)
         self.__menu.add.button('Start game', self.display_board)
         self.__menu.add.button('Quit', pygame_menu.events.EXIT)
@@ -61,6 +61,14 @@ class GUI:
 
         pygame.display.flip()
 
+        if self.game.get_difficulty() == "Easy":
+            self.game.select_random_board_position()
+        elif self.game.get_difficulty() == "Hard":
+            start = time.time()
+            best_move = self.game.get_best_move()
+            end = time.time()
+            self.game.select_board_position(best_move[0], best_move[1], 2)
+
     def display_game_over(self, winner):
         self.game.reset_game()
         self.__game_over_screen = pygame.display.set_mode(
@@ -71,7 +79,7 @@ class GUI:
             self.__game_over_menu.add.label(
                 "Tie", font_size=45, font_color=(255, 0, 0), padding=(0, 0, 10, 0))
         else:
-            winner = 'X' if winner == 1 else 'O'
+            winner = 'X' if winner == 2 else 'O'
             self.__game_over_menu.add.label(str(winner) + " wins!",
                                             font_size=45, font_color=(255, 0, 0), padding=(0, 0, 10, 0))
         pygame.display.flip()
