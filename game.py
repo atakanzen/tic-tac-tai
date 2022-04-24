@@ -3,9 +3,6 @@ import random
 import pygame
 
 
-# TODO: Minimax with alpha-beta prune
-# TODO: See the final board after the game is over
-
 class Game:
     board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
 

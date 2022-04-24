@@ -1,5 +1,3 @@
-import sys
-import time
 import pygame
 from game import Game
 from gui import GUI
@@ -9,7 +7,6 @@ def main():
     """
     Main function
     """
-    sys.tracebacklimit = 0
     game = Game()
     gui = GUI(game)
 
