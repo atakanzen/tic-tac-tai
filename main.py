@@ -1,4 +1,5 @@
 import sys
+import time
 import pygame
 from game import Game
 from gui import GUI
@@ -43,7 +44,7 @@ def main():
                                 continue
 
                         elif game.get_difficulty() == "Hard":
-                            best_move = game.get_best_move()
+                            best_move = game.get_best_move_alphabeta()
                             game.select_board_position(
                                 best_move[0], best_move[1], 2)
 

@@ -153,6 +153,55 @@ class Game:
                         best_move = (row, column)
         return best_move
 
+    def get_best_move_alphabeta(self):
+        best_score = -math.inf
+        best_move = None
+        for row in range(3):
+            for column in range(3):
+                if self.is_blank_position(row, column):
+                    self.board[row][column] = 2
+                    score = self.minimax_alphabeta(
+                        0, -math.inf, math.inf, False)
+                    self.board[row][column] = 0
+                    if score > best_score:
+                        best_score = score
+                        best_move = (row, column)
+        return best_move
+
+    def minimax_alphabeta(self, depth, alpha, beta, is_maximizing):
+        result = self.check_winner()
+        if result != None:
+            return self.scores[result]
+
+        if is_maximizing:
+            best_score = -math.inf
+            for row in range(3):
+                for column in range(3):
+                    if self.is_blank_position(row, column):
+                        self.board[row][column] = 2
+                        score = self.minimax_alphabeta(
+                            depth + 1, alpha, beta, False)
+                        self.board[row][column] = 0
+                        best_score = max(best_score, score)
+                        alpha = max(alpha, best_score)
+                        if beta <= alpha:
+                            break
+            return best_score
+        else:
+            best_score = math.inf
+            for row in range(3):
+                for column in range(3):
+                    if self.is_blank_position(row, column):
+                        self.board[row][column] = 1
+                        score = self.minimax_alphabeta(
+                            depth + 1, alpha, beta, True)
+                        self.board[row][column] = 0
+                        best_score = min(best_score, score)
+                        beta = min(beta, best_score)
+                        if beta <= alpha:
+                            break
+            return best_score
+
     def minimax(self, depth, is_maximizing):
         result = self.check_winner()
         if result != None:

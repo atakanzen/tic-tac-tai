@@ -64,9 +64,7 @@ class GUI:
         if self.game.get_difficulty() == "Easy":
             self.game.select_random_board_position()
         elif self.game.get_difficulty() == "Hard":
-            start = time.time()
-            best_move = self.game.get_best_move()
-            end = time.time()
+            best_move = self.game.get_best_move_alphabeta()
             self.game.select_board_position(best_move[0], best_move[1], 2)
 
     def display_game_over(self, winner):
